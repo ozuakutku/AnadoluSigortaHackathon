@@ -1,43 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:sigortamcepte/core/File_details.dart';
-import 'package:sigortamcepte/core/info_card.dart';
+import 'package:sigortamcepte/constants/textstyle_consts.dart';
+import 'package:sigortamcepte/core/offer_card.dart';
+import 'package:sigortamcepte/core/policy_card.dart';
+import 'package:sigortamcepte/product/custom_appbar.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kaza Yaptım Hasar Dosyası'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CrashCarImage(),
-            const SizedBox(height: 16),
-            DosyaBilgileri(context),
-            InfoCard(
-              title: 'Servis Bilgileri',
-              fileStatus: 'Aktif', // Dosya durumu burada belirtilebilir.
-              fileNo: '123456',
-              phoneNumber: '+90 123 456 7890',
-              email: 'info@sigortamcep.com',
-              address: 'Sigorta Caddesi, No: 123, İstanbul',
+      appBar: CustomAppBar(),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // POLICY CARD
+                PolicyCardListview(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    "SANA OZEL",
+                    style: kBlackBoldTextStyle,
+                  ),
+                ),
+                OfferCard(),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  Image CrashCarImage() {
-    return Image.asset(
-      'assets/crushedcar.jpeg',
-      fit: BoxFit.cover,
-      height: 200,
+class PolicyCardListview extends StatelessWidget {
+  const PolicyCardListview({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 4,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int index) {
+          return PolicyCard();
+        },
+      ),
     );
   }
 }
