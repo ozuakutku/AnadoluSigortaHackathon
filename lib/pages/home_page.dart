@@ -15,7 +15,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(actions: [
+        IconButton(
+            onPressed: () {}, icon: Icon(Icons.notifications_none_rounded)),
+        CircleAvatar(
+          child: Image.asset(
+            'assets/crushedcar.jpeg',
+          ),
+        )
+      ]),
       body: ListView(
         children: [
           Padding(
