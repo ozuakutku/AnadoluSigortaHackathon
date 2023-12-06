@@ -31,7 +31,7 @@ class OfferCard extends StatelessWidget {
                         Container(
                           width: MediaQuery.of(context).size.width / 3,
                           child: Text(
-                            "ÇİLİNGİR VE ASİSTAN HAKKINIZ BULUNMAKTA;",
+                            "ÇİLİNGİR VE ASİSTAN HAKKINIZ BULUNMAKTA!",
                             maxLines: 3,
                           ),
                         ),
