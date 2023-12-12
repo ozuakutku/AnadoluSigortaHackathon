@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
 import 'package:sigortamcepte/core/offer_card.dart';
 import 'package:sigortamcepte/core/policy_card.dart';
+import 'package:sigortamcepte/pages/accident_datail_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,10 +35,24 @@ class _HomePageState extends State<HomePage> {
                 // POLICY CARD
                 PolicyCardListview(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Text(
-                    "SANA OZEL",
-                    style: kBlackBoldTextStyle,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "SANA OZEL",
+                        style: kBlackBoldTextStyle,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return AccidentDetailPage();
+                            }));
+                          },
+                          child: Text("Kaza Yaptım")),
+                    ],
                   ),
                 ),
                 OfferCard(),

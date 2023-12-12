@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:sigortamcepte/pages/home_page.dart';
+import 'package:sigortamcepte/product/custom_appbar.dart';
 
-void main() {
-  runApp(MyApp());
+class MainPage extends StatefulWidget {
+  @override
+  State<MainPage> createState() => _MainPageState();
 }
 
-class MyApp extends StatelessWidget {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                elevation: 0,
+              ),
+              child: Text(
+                'Giriş Yap',
+                style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ]),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +51,8 @@ class MyApp extends StatelessWidget {
                   itemCount: 6,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(right: 8), // Storyler arasındaki boşluk
+                      margin: EdgeInsets.only(
+                          right: 8), // Storyler arasındaki boşluk
                       child: Column(
                         children: [
                           CircleAvatar(
@@ -58,7 +82,9 @@ class MyApp extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 child: Text('Ürün ve Tekliflerimiz'),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               // Alt Kısımdaki 6 Widget
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -70,6 +96,12 @@ class MyApp extends StatelessWidget {
                       children: [
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return HomePage();
+                              }), (route) => false);
+                            },
                             backgroundColor: Colors.white,
                             shadowColor: Colors.orangeAccent,
                             text: 'ARAÇ',
@@ -78,6 +110,7 @@ class MyApp extends StatelessWidget {
                         ),
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {},
                             backgroundColor: Colors.white,
                             shadowColor: Colors.redAccent,
                             text: 'KONUT',
@@ -86,6 +119,7 @@ class MyApp extends StatelessWidget {
                         ),
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {},
                             backgroundColor: Colors.white,
                             shadowColor: Colors.green,
                             text: 'SAĞLIK',
@@ -100,6 +134,7 @@ class MyApp extends StatelessWidget {
                       children: [
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {},
                             backgroundColor: Colors.white,
                             shadowColor: Colors.purple,
                             text: 'PATİM GÜVENDE',
@@ -108,6 +143,7 @@ class MyApp extends StatelessWidget {
                         ),
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {},
                             backgroundColor: Colors.white,
                             shadowColor: Color(0xff223318),
                             text: 'SEYAHAT',
@@ -116,6 +152,7 @@ class MyApp extends StatelessWidget {
                         ),
                         Expanded(
                           child: WidgetContainer(
+                            onTap: () {},
                             backgroundColor: Colors.white,
                             shadowColor: Color(0xff8473EC),
                             text: 'DİĞER',
@@ -170,114 +207,62 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(60.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.notes_rounded),
-      ),
-      title: Column(
-        children: [
-          Text(
-            "ANADOLU",
-            style: TextStyle(
-              color: Colors.blue[800],
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            "SİGORTA",
-            style: TextStyle(
-              color: Colors.blue[800],
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              elevation: 0,
-            ),
-            child: Text(
-              'Giriş Yap',
-              style: TextStyle(
-                color: Colors.blue[800],
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class WidgetContainer extends StatelessWidget {
   final Color backgroundColor;
   final Color shadowColor;
   final String text;
   final String image;
+  final Function()? onTap;
 
   WidgetContainer({
     required this.backgroundColor,
     required this.shadowColor,
     required this.text,
     required this.image,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 0,
-            color: shadowColor,
-            offset: Offset(0, 3),
-            blurStyle: BlurStyle.solid,
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-
-            child: Center(
-              child: Image.asset(
-                image,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 150,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 0,
+              color: shadowColor,
+              offset: Offset(0, 3),
+              blurStyle: BlurStyle.solid,
+            ),
+          ],
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              child: Center(
+                child: Image.asset(
+                  image,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            text,
-            style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
-          ),
-        ],
+            SizedBox(height: 20),
+            Text(
+              text,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
