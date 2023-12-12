@@ -3,6 +3,10 @@
         android:label="sigortamcepte"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- TODO: Add your Google Maps API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBb0tBXPd-Gr18x7m4ITlqpis4I7nTjMoo"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
