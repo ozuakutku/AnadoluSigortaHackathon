@@ -5,6 +5,7 @@ import 'package:sigortamcepte/core/policy_card.dart';
 import 'package:sigortamcepte/pages/accident_datail_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
