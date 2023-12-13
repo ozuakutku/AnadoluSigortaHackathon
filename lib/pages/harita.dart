@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'veritabani.dart';
-
+import 'servisbilgi.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -110,25 +110,30 @@ class _HaritaState extends State<Harita> {
         _selectedMarker = _markers.firstWhere((marker) => marker.markerId == markerId);
       });
     } else {
+      // Seçilen marker ile eşleşen ServisBilgi'yi bul
+      ServisBilgi selectedServisBilgi = Veritabani.servisBilgileri.firstWhere((servis) => servis.markerId == _selectedMarker!.markerId.value);
+
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 100,
-            child: Center(
-              child: Column(
-                children: [
-                  Text('Servis Noktası: ${_selectedMarker!.markerId.value}'),
-                  Text('İletişim: ${_selectedMarker!.infoWindow.snippet ?? ""}'),
-                  Row(
-                    children: [
-                      Text('Puan: ${_selectedMarker!.infoWindow.snippet?.split(' ')[1] ?? ""}'),
-                      // Burada yıldızları ekleyebilirsiniz
-                      _buildStarRating(_selectedMarker!.infoWindow.snippet?.split(' ')[1]),
-                    ],
-                  ),
-                ],
-              ),
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Servis Noktası: ${_selectedMarker!.markerId.value}'),
+                SizedBox(height: 8),
+                Text('İletişim: ${selectedServisBilgi.contactInfo}'),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text('Puan: '),
+                    SizedBox(width: 8),
+                    // Burada yıldızları ekleyebilirsiniz
+                    _buildStarRating(selectedServisBilgi.rating),
+                  ],
+                ),
+              ],
             ),
           );
         },
@@ -136,13 +141,13 @@ class _HaritaState extends State<Harita> {
     }
   }
 
-  Widget _buildStarRating(String? rating) {
+
+
+  Widget _buildStarRating(double? rating) {
     if (rating == null) return Container();
 
-    double doubleRating = double.tryParse(rating.split('/')[0]) ?? 0;
-
-    int filledStars = doubleRating.floor();
-    int halfStars = ((doubleRating - filledStars) * 2).round();
+    int filledStars = rating.floor();
+    int halfStars = ((rating - filledStars) * 2).round();
     int emptyStars = 5 - filledStars - halfStars;
 
     return Row(
@@ -160,6 +165,7 @@ class _HaritaState extends State<Harita> {
           ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
