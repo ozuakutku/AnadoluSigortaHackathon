@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'harita.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,128 +9,261 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Kampanyalar ve Duyurular
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Text('Kampanyalar ve Duyurular'),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool isMenuOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Column(
+          children: [
+            Text(
+              "ANADOLU",
+              style: TextStyle(
+                color: Colors.blue[800],
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
-              // Storyler
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                height: 150,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: 8), // Storyler arasındaki boşluk
+            ),
+            Text(
+              "SİGORTA",
+              style: TextStyle(
+                color: Colors.blue[800],
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                elevation: 0,
+              ),
+              child: Text(
+                'Giriş Yap',
+                style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menü',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Ana Sayfa'),
+              onTap: () {
+                // Ana sayfa ile ilgili işlemleri ekleyin
+                // ...
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('En Yakın'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Harita()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('S.S.S.'),
+              onTap: () {
+                // En Yakın S.S.S. ile ilgili işlemleri ekleyin
+                // ...
+                Navigator.pop(context);
+              },
+              // Diğer menü seçenekleri ekleyin
+            ),
+          ],
+        ),
+      ),
+      body: Stack(
+        children: [
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 300),
+            top: 0,
+            left: isMenuOpen ? MediaQuery.of(context).size.width * 0.6 : 0,
+            right: isMenuOpen ? -MediaQuery.of(context).size.width * 0.6 : 0,
+            bottom: 0,
+            child: Scaffold(
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Kampanyalar ve Duyurular
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: Text('Kampanyalar ve Duyurular'),
+                    ),
+                    // Storyler
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      height: 150,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(right: 8),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 38,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: AssetImage(
+                                      getStoryImage(index),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  getStoryTitle(index),
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    // Ürün ve Tekliflerimiz
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: Text('Ürün ve Tekliflerimiz'),
+                    ),
+                    SizedBox(height: 30,),
+                    // Alt Kısımdaki 6 Widget
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      height: 400,
                       child: Column(
                         children: [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                              radius: 38,
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage(
-                                getStoryImage(index),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.orangeAccent,
+                                  text: 'ARAÇ',
+                                  image: 'assets/witgetlar/arac.png',
+                                ),
                               ),
-                            ),
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.redAccent,
+                                  text: 'KONUT',
+                                  image: 'assets/witgetlar/konut.png',
+                                ),
+                              ),
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.green,
+                                  text: 'SAĞLIK',
+                                  image: 'assets/witgetlar/saglik.png',
+                                ),
+                              ),
+                            ],
                           ),
-                          // Metin Storyler Altında
-                          Text(
-                            getStoryTitle(index),
-                            style: TextStyle(fontSize: 12),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.purple,
+                                  text: 'PATİM GÜVENDE',
+                                  image: 'assets/witgetlar/patimguvende.png',
+                                ),
+                              ),
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Color(0xff223318),
+                                  text: 'SEYAHAT',
+                                  image: 'assets/witgetlar/seyahat.png',
+                                ),
+                              ),
+                              Expanded(
+                                child: WidgetContainer(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Color(0xff8473EC),
+                                  text: 'DİĞER',
+                                  image: 'assets/witgetlar/diger.png',
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
-              ),
-              // Ürün ve Tekliflerimiz
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Text('Ürün ve Tekliflerimiz'),
-              ),
-              SizedBox(height: 30,),
-              // Alt Kısımdaki 6 Widget
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                height: 400,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.orangeAccent,
-                            text: 'ARAÇ',
-                            image: 'assets/witgetlar/arac.png',
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.redAccent,
-                            text: 'KONUT',
-                            image: 'assets/witgetlar/konut.png',
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.green,
-                            text: 'SAĞLIK',
-                            image: 'assets/witgetlar/saglik.png',
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.purple,
-                            text: 'PATİM GÜVENDE',
-                            image: 'assets/witgetlar/patimguvende.png',
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Color(0xff223318),
-                            text: 'SEYAHAT',
-                            image: 'assets/witgetlar/seyahat.png',
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetContainer(
-                            backgroundColor: Colors.white,
-                            shadowColor: Color(0xff8473EC),
-                            text: 'DİĞER',
-                            image: 'assets/witgetlar/diger.png',
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          isMenuOpen
+              ? Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              color: Colors.black54,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isMenuOpen = false;
+                  });
+                },
+                child: Container(),
+              ),
+            ),
+          )
+              : Container(),
+          isMenuOpen ? MainMenu() : Container(),
+        ],
       ),
     );
   }
@@ -152,7 +286,6 @@ class MyApp extends StatelessWidget {
   }
 
   String getStoryImage(int index) {
-    // Resim dosyalarınızın adlarını burada kullanmalısınız
     List<String> storyImages = [
       'assets/cuzdan.png',
       'assets/trafik.png',
@@ -167,62 +300,6 @@ class MyApp extends StatelessWidget {
     } else {
       return '';
     }
-  }
-}
-
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(60.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.notes_rounded),
-      ),
-      title: Column(
-        children: [
-          Text(
-            "ANADOLU",
-            style: TextStyle(
-              color: Colors.blue[800],
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            "SİGORTA",
-            style: TextStyle(
-              color: Colors.blue[800],
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              elevation: 0,
-            ),
-            child: Text(
-              'Giriş Yap',
-              style: TextStyle(
-                color: Colors.blue[800],
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }
 
@@ -262,7 +339,6 @@ class WidgetContainer extends StatelessWidget {
           Container(
             width: 80,
             height: 80,
-
             child: Center(
               child: Image.asset(
                 image,
@@ -275,7 +351,48 @@ class WidgetContainer extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             text,
-            style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MainMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: double.infinity,
+      color: Colors.white,
+      child: Column(
+        children: [
+          ListTile(
+            title: Text('Ana Sayfa'),
+            onTap: () {
+              // Ana sayfa ile ilgili işlemleri ekleyin
+              // ...
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('En Yakın'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Harita()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('S.S.S.'),
+            onTap: () {
+              // En Yakın S.S.S. ile ilgili işlemleri ekleyin
+              // ...
+              Navigator.pop(context);
+            },
+            // Diğer menü seçenekleri ekleyin
           ),
         ],
       ),
