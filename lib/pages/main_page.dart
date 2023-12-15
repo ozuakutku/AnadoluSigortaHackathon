@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sigortamcepte/pages/home_page.dart';
 import 'harita.dart';
 
 class MainPage extends StatefulWidget {
@@ -10,6 +11,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -184,7 +186,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Expanded(
                                 child: WidgetContainer(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return HomePage();
+                                    }));
+                                  },
                                   backgroundColor: Colors.white,
                                   shadowColor: Colors.orangeAccent,
                                   text: 'ARAÇ',
@@ -329,42 +336,45 @@ class WidgetContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 0,
-            color: shadowColor,
-            offset: Offset(0, 3),
-            blurStyle: BlurStyle.solid,
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            child: Center(
-              child: Image.asset(
-                image,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 150,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 0,
+              color: shadowColor,
+              offset: Offset(0, 3),
+              blurStyle: BlurStyle.solid,
+            ),
+          ],
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              child: Center(
+                child: Image.asset(
+                  image,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            text,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-        ],
+            SizedBox(height: 20),
+            Text(
+              text,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }

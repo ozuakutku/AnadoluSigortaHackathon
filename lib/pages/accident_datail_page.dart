@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sigortamcepte/constants/textstyle_consts.dart';
+import 'package:sigortamcepte/product/custom_appbar.dart';
 
 class AccidentDetailPage extends StatefulWidget {
   @override
@@ -9,6 +10,11 @@ class AccidentDetailPage extends StatefulWidget {
 
 class _AccidentDetailPageState extends State<AccidentDetailPage> {
   TextEditingController aciklamaController = TextEditingController();
+  TextEditingController isimController = TextEditingController();
+  TextEditingController soyisimController = TextEditingController();
+  TextEditingController plaka1Controller = TextEditingController();
+  TextEditingController plaka2Controller = TextEditingController();
+  TextEditingController plaka3Controller = TextEditingController();
   String? selectedLocation;
   bool mevcutKonumuKullan = true;
 
@@ -18,57 +24,114 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Veri Girişi'),
+      appBar: CustomAppBar(
+        actions: [
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                "Otomatik Doldur",
+                style: kBlackBoldTextStyle,
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
-            ElevatedButton(
-              onPressed: () async {
-                // Harita sayfasını aç ve konumu seç
-                String? location = await _selectLocation(context);
-                if (location != null) {
-                  setState(() {
-                    selectedLocation = location;
-                  });
-                }
-              },
-              child: Text('Konum Seç'),
+            customTextField(
+                controller: isimController, hintText: "İsim", border: false),
+            customTextField(
+                controller: soyisimController,
+                hintText: "Soyisim",
+                border: false),
+            Text(
+              "Plaka",
+              style: kBlackBoldTextStyle.copyWith(fontSize: 16),
             ),
-            SizedBox(height: 16.0),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: Colors.blue),
-              ),
-              child: TextField(
-                controller: aciklamaController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  labelText: 'Hasar Açıklaması',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(10.0),
-                ),
-              ),
+            Row(
+              children: [
+                Expanded(
+                    child: customTextField(
+                        padding: EdgeInsets.only(right: 4),
+                        controller: plaka1Controller)),
+                Expanded(
+                    child: customTextField(
+                        padding: EdgeInsets.symmetric(horizontal: 4),
+                        controller: plaka2Controller)),
+                Expanded(
+                    child: customTextField(
+                        padding: EdgeInsets.only(left: 4),
+                        controller: plaka3Controller)),
+              ],
             ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                // Verileri gönder
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OutputPage(
-                      konum: selectedLocation ?? 'Mevcut Konum',
-                      aciklama: aciklamaController.text,
-                    ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Harita sayfasını aç ve konumu seç
+                      String? location = await _selectLocation(context);
+                      if (location != null) {
+                        setState(() {
+                          selectedLocation = location;
+                        });
+                      }
+                    },
+                    child: Text('Konum Seç'),
                   ),
-                );
-              },
-              child: Text('Verileri Gönder'),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      mevcutKonumuKullan = !mevcutKonumuKullan;
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          value: mevcutKonumuKullan, onChanged: (value) {}),
+                      Text(
+                        "Mevcut Konumu \n Kullan",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            customTextField(
+              controller: aciklamaController,
+              hintText: "Hasar Açıklaması",
+              maxLines: 5,
+            ),
+            SizedBox(height: 16.0),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Verileri gönder
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OutputPage(
+                            konum: selectedLocation ?? 'Mevcut Konum',
+                            aciklama: aciklamaController.text,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('Dosyayı Oluştur ve Devam Et'),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {}, icon: Icon(Icons.camera_alt_outlined))
+              ],
             ),
           ],
         ),
@@ -86,6 +149,43 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
     );
 
     return selectedLocation;
+  }
+}
+
+class customTextField extends StatelessWidget {
+  customTextField({
+    super.key,
+    required this.controller,
+    this.hintText,
+    this.maxLines,
+    this.padding,
+    this.border,
+  });
+  bool? border = true;
+  EdgeInsetsGeometry? padding;
+  String? hintText;
+  int? maxLines = 1;
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    print("durum ");
+    return Container(
+      margin: padding ?? EdgeInsets.symmetric(vertical: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: border == true ? Border.all(color: Colors.blue) : null,
+      ),
+      child: TextField(
+        controller: controller,
+        maxLines: this.maxLines,
+        decoration: InputDecoration(
+          labelText: hintText,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(10.0),
+        ),
+      ),
+    );
   }
 }
 
