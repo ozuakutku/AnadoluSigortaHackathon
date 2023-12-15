@@ -1,5 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'veritabani.dart';
+import 'servisbilgi.dart';
+
 
 class RatingQuestionsPage extends StatefulWidget {
   @override
@@ -28,7 +32,7 @@ class _RatingQuestionsPageState extends State<RatingQuestionsPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, _ratings);
+                updateRating("Servis Noktası 1");
               },
               child: Text('Gönder'),
             ),
@@ -64,4 +68,23 @@ class _RatingQuestionsPageState extends State<RatingQuestionsPage> {
       ],
     );
   }
+
+  void updateRating(String selectedMarkerId) {
+    // Ortalamayı hesapla
+    double averageRating = _ratings.reduce((a, b) => a + b) / _ratings.length;
+
+    // Bu değeri kullanarak seçilen servis bilgisini güncelle
+    ServisBilgi? selectedService = Veritabani.servisBilgileri.firstWhereOrNull((servis) => servis.markerId == selectedMarkerId);
+
+    if (selectedService != null) {
+      selectedService.rating = averageRating;
+
+      // RatingQuestionsPage'i kapat ve değerleri geri gönder
+      Navigator.pop(context, _ratings);
+    } else {
+      // Seçilen servis bulunamazsa durumunu ele al
+      print('Hata: Seçilen servis bulunamadı.');
+    }
+  }
+
 }

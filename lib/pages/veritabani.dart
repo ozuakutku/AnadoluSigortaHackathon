@@ -1,4 +1,6 @@
 import 'servisbilgi.dart';
+import 'package:collection/collection.dart';
+
 
 class Veritabani {
   static List<ServisBilgi> servisBilgileri = [
@@ -46,4 +48,11 @@ class Veritabani {
     ),
     // Diğer servis noktalarını ekleyin
   ];
+
+  static void updateServisRating(String markerId, double newRating) {
+    ServisBilgi? servis = servisBilgileri.firstWhereOrNull((servis) => servis.markerId == markerId);
+    if (servis != null) {
+      servis.rating = newRating;
+    }
+  }
 }

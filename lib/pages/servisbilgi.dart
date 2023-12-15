@@ -1,9 +1,9 @@
 class ServisBilgi {
-  final String markerId;
-  final String contactInfo;
-  final double rating;
-  final double latitude;
-  final double longitude;
+  String markerId;
+  String contactInfo;
+  double rating; // Rating field'ı ekledik
+  double latitude;
+  double longitude;
 
   ServisBilgi({
     required this.markerId,
