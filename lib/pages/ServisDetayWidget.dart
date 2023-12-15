@@ -19,7 +19,8 @@ class ServisDetayWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [ // Bir gölge ekleyerek daha belirgin bir arka plan oluşturabilirsiniz
+        boxShadow: [
+          // Bir gölge ekleyerek daha belirgin bir arka plan oluşturabilirsiniz
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
@@ -32,7 +33,8 @@ class ServisDetayWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Servis Noktası: $markerId', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text('Servis Noktası: $markerId',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(height: 8),
           Text('İletişim: $contactInfo'),
           SizedBox(height: 8),
@@ -56,16 +58,16 @@ class ServisDetayWidget extends StatelessWidget {
 
     return Row(
       children: List.generate(
-        filledStars,
+            filledStars,
             (index) => Icon(Icons.star, color: Colors.yellow, size: 20),
-      ) +
+          ) +
           List.generate(
             halfStars,
-                (index) => Icon(Icons.star_half, color: Colors.yellow, size: 20),
+            (index) => Icon(Icons.star_half, color: Colors.yellow, size: 20),
           ) +
           List.generate(
             emptyStars,
-                (index) => Icon(Icons.star_border, color: Colors.grey, size: 20),
+            (index) => Icon(Icons.star_border, color: Colors.grey, size: 20),
           ),
     );
   }

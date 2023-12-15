@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
+import 'package:sigortamcepte/pages/after_save_file_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 
 class AccidentDetailPage extends StatefulWidget {
@@ -18,6 +20,8 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
   String? selectedLocation;
   bool mevcutKonumuKullan = true;
 
+  ImagePicker _imagePicker = ImagePicker();
+  XFile? _image;
   // Varsayılan olarak mevcut konumu kullan
   String mevcutKonum = "Mevcut Konum";
 
@@ -39,11 +43,15 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
         child: ListView(
           children: [
             customTextField(
-                controller: isimController, hintText: "İsim", border: false),
+              controller: isimController,
+              hintText: "İsim:",
+              border: false,
+            ),
             customTextField(
-                controller: soyisimController,
-                hintText: "Soyisim",
-                border: false),
+              controller: soyisimController,
+              hintText: "Soyisim:",
+              border: false,
+            ),
             Text(
               "Plaka",
               style: kBlackBoldTextStyle.copyWith(fontSize: 16),
@@ -119,7 +127,13 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OutputPage(
+                          builder: (context) => AfterSaveFilePage(
+                            PlakaNo: "16 BCS 380",
+                            ad: "Kadir",
+                            soyad: "Yalcin",
+                            dosyaTarihi: "16.12.2012",
+                            dosyaNo: "31351523",
+                            hasarTuru: "Çarpma",
                             konum: selectedLocation ?? 'Mevcut Konum',
                             aciklama: aciklamaController.text,
                           ),
@@ -130,7 +144,11 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {}, icon: Icon(Icons.camera_alt_outlined))
+                    onPressed: () {
+                      _pickImage();
+                      print("Foto çek");
+                    },
+                    icon: Icon(Icons.camera_alt_outlined)),
               ],
             ),
           ],
@@ -150,22 +168,34 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
 
     return selectedLocation;
   }
+
+  void _pickImage() async {
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+        print("foto çekildi");
+      });
+    }
+  }
 }
 
 class customTextField extends StatelessWidget {
+  bool border;
+  EdgeInsetsGeometry? padding;
+  String? hintText;
+  int? maxLines;
+  final TextEditingController controller;
   customTextField({
     super.key,
     required this.controller,
     this.hintText,
-    this.maxLines,
+    this.maxLines = 1,
+    this.border = true,
     this.padding,
-    this.border,
   });
-  bool? border = true;
-  EdgeInsetsGeometry? padding;
-  String? hintText;
-  int? maxLines = 1;
-  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -183,33 +213,6 @@ class customTextField extends StatelessWidget {
           labelText: hintText,
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(10.0),
-        ),
-      ),
-    );
-  }
-}
-
-class OutputPage extends StatelessWidget {
-  final String konum;
-  final String aciklama;
-
-  OutputPage({required this.konum, required this.aciklama});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Alınan Veriler'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Konum: $konum'),
-            SizedBox(height: 16.0),
-            Text('Hasar Açıklaması: $aciklama'),
-          ],
         ),
       ),
     );
