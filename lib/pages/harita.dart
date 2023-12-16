@@ -106,6 +106,9 @@ class _HaritaState extends State<Harita> {
           position: position,
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           infoWindow: InfoWindow(
+            onTap: () {
+              _onMarkerTapped(MarkerId(markerId));
+            },
             title: markerId,
             snippet: 'Puan: $defaultRating/5',
           ),
@@ -200,14 +203,6 @@ class _HaritaState extends State<Harita> {
             });
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Ana sayfaya geri dön
-          Navigator.pop(context);
-        },
-        tooltip: 'Ana Sayfa',
-        child: const Icon(Icons.arrow_back),
       ),
     );
   }

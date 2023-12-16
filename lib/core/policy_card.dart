@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sigortamcepte/constants/color_const.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
 
 class PolicyCard extends StatelessWidget {
+  final index;
   const PolicyCard({
     super.key,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color _color = getColor(index);
     return Card(
       elevation: 10,
       child: Container(
@@ -44,12 +48,14 @@ class PolicyCard extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                               text: 'POLİÇE NO :',
-                              style: kBoldOrangeTextStyle,
+                              style:
+                                  kBoldOrangeTextStyle.copyWith(color: _color),
                             ),
                             TextSpan(
                                 text: ' 515315351',
                                 style: kBoldOrangeTextStyle.copyWith(
-                                    fontWeight: FontWeight.normal)),
+                                    fontWeight: FontWeight.normal,
+                                    color: _color)),
                           ],
                         ),
                       ),
@@ -64,7 +70,7 @@ class PolicyCard extends StatelessWidget {
                         style: TextStyle(color: Colors.black54),
                         children: [
                           TextSpan(
-                            text: "Plaka:",
+                            text: "Plaka: ",
                             style: kBlackBoldTextStyle,
                           ),
                           TextSpan(text: "03 AAA 03")
@@ -91,7 +97,7 @@ class PolicyCard extends StatelessWidget {
                         children: [
                           Text(
                             "Detaylar",
-                            style: kBoldOrangeTextStyle,
+                            style: kBoldOrangeTextStyle.copyWith(color: _color),
                           ),
                           Icon(Icons.arrow_forward_ios_outlined)
                         ],
@@ -104,7 +110,7 @@ class PolicyCard extends StatelessWidget {
             Container(
               height: 10,
               decoration: BoxDecoration(
-                  color: kBoldOrangeTextStyle.color,
+                  color: _color,
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(10))),
             )

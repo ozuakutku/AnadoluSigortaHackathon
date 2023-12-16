@@ -5,7 +5,6 @@ import 'package:sigortamcepte/core/policy_card.dart';
 import 'package:sigortamcepte/pages/accident_datail_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -79,7 +78,7 @@ class PolicyCardListview extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: 5,
         itemBuilder: (BuildContext context, int index) {
-          return PolicyCard();
+          return PolicyCard(index: index);
         },
       ),
     );
