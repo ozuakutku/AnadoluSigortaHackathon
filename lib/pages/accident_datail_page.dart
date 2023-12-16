@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
 import 'package:sigortamcepte/pages/after_save_file_page.dart';
+import 'package:sigortamcepte/pages/location_map_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 
 class AccidentDetailPage extends StatefulWidget {
@@ -42,15 +43,54 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            customTextField(
-              controller: isimController,
-              hintText: "İsim:",
-              border: false,
-            ),
-            customTextField(
-              controller: soyisimController,
-              hintText: "Soyisim:",
-              border: false,
+            Container(
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Sigorta Şirketinin adı:"),
+                    enable: false,
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Poliçe Numarası:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Adı Soyadı:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("TC:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Poliçe Numarası:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Kazanın olduğu şehir:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Kaza yapan:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Kazanın olduğu İlçe:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Sigorta Şirketinin adı:"),
+                  ),
+                  customTextField(
+                    controller: isimController,
+                    prefix: Text("Kaza yapan kişinin yakınlığı:"),
+                  ),
+                ],
+              ),
             ),
             Text(
               "Plaka",
@@ -58,18 +98,15 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
             ),
             Row(
               children: [
-                Expanded(
-                    child: customTextField(
-                        padding: EdgeInsets.only(right: 4),
-                        controller: plaka1Controller)),
-                Expanded(
-                    child: customTextField(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
-                        controller: plaka2Controller)),
-                Expanded(
-                    child: customTextField(
-                        padding: EdgeInsets.only(left: 4),
-                        controller: plaka3Controller)),
+                customTextField(
+                    padding: EdgeInsets.only(right: 4),
+                    controller: plaka1Controller),
+                customTextField(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    controller: plaka2Controller),
+                customTextField(
+                    padding: EdgeInsets.only(left: 4),
+                    controller: plaka3Controller),
               ],
             ),
             SizedBox(
@@ -100,11 +137,19 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                   child: Row(
                     children: [
                       Checkbox(
-                          value: mevcutKonumuKullan, onChanged: (value) {}),
-                      Text(
-                        "Mevcut Konumu \n Kullan",
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
+                          value: mevcutKonumuKullan,
+                          onChanged: (value) {
+                            setState(() {
+                              mevcutKonumuKullan = !mevcutKonumuKullan;
+                            });
+                          }),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: Text(
+                          "Mevcut Konumu  Kullan",
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
                       ),
                     ],
                   ),
@@ -114,7 +159,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
             SizedBox(height: 16.0),
             customTextField(
               controller: aciklamaController,
-              hintText: "Hasar Açıklaması",
+              prefix: Text("Hasar Açıklaması:"),
               maxLines: 5,
             ),
             SizedBox(height: 16.0),
@@ -162,7 +207,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
     final String? selectedLocation = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => accMapPage(),
+        builder: (context) => LocationMapPage(),
       ),
     );
 
@@ -186,7 +231,9 @@ class customTextField extends StatelessWidget {
   bool border;
   EdgeInsetsGeometry? padding;
   String? hintText;
-  int? maxLines;
+  int maxLines;
+  Widget? prefix;
+  bool? enable;
   final TextEditingController controller;
   customTextField({
     super.key,
@@ -195,84 +242,35 @@ class customTextField extends StatelessWidget {
     this.maxLines = 1,
     this.border = true,
     this.padding,
+    this.prefix,
+    this.enable,
   });
 
   @override
   Widget build(BuildContext context) {
-    print("durum ");
-    return Container(
-      margin: padding ?? EdgeInsets.symmetric(vertical: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        border: border == true ? Border.all(color: Colors.blue) : null,
-      ),
-      child: TextField(
-        controller: controller,
-        maxLines: this.maxLines,
-        decoration: InputDecoration(
-          labelText: hintText,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.all(10.0),
-        ),
-      ),
-    );
-  }
-}
-
-class accMapPage extends StatefulWidget {
-  @override
-  _accMapPageState createState() => _accMapPageState();
-}
-
-class _accMapPageState extends State<accMapPage> {
-  late GoogleMapController mapController;
-  LatLng? selectedLatLng;
-  Set<Marker> markers = {};
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Konum Seç'),
-      ),
-      body: GoogleMap(
-        onMapCreated: (controller) {
-          setState(() {
-            mapController = controller;
-          });
-        },
-        initialCameraPosition: CameraPosition(
-          target: LatLng(0.0, 0.0),
-          zoom: 2,
-        ),
-        markers: markers,
-        onTap: (latLng) {
-          setState(() {
-            selectedLatLng = latLng;
-            markers.clear();
-            markers.add(
-              Marker(
-                markerId: MarkerId('selectedLocation'),
-                position: selectedLatLng!,
-                infoWindow: InfoWindow(
-                  title: 'Seçilen Konum',
-                ),
+    return Expanded(
+      child: Padding(
+        padding: padding ?? EdgeInsets.symmetric(vertical: 1.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: border == true ? Border.all(color: Colors.blue) : null,
+          ),
+          child: TextField(
+            enabled: enable,
+            controller: controller,
+            maxLines: maxLines,
+            decoration: InputDecoration(
+              prefixIcon: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                child: prefix,
               ),
-            );
-          });
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Konumu seç ve kapat
-          if (selectedLatLng != null) {
-            Navigator.pop(
-              context,
-              '(${selectedLatLng!.latitude}, ${selectedLatLng!.longitude})',
-            );
-          }
-        },
-        child: Icon(Icons.check),
+              labelText: hintText,
+              border: InputBorder.none,
+            ),
+          ),
+        ),
       ),
     );
   }
