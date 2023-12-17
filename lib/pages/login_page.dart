@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sigortamcepte/pages/main_page.dart';
 import 'package:sigortamcepte/product/custom_text_field.dart';
+import 'package:sigortamcepte/service/datas.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sigortamcepte/pages/home_page.dart';
+import 'package:sigortamcepte/product/custom_appbar.dart';
 import 'harita.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,49 +14,24 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            Text(
-              "ANADOLU",
-              style: TextStyle(
-                color: Colors.blue[800],
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-            Text(
-              "SİGORTA",
-              style: TextStyle(
-                color: Colors.blue[800],
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                elevation: 0,
-              ),
-              child: Text(
-                'Giriş Yap',
-                style: TextStyle(
-                  color: Colors.blue[800],
-                  fontSize: 16,
-                ),
-              ),
+      appBar: CustomAppBar(actions: [
+        ElevatedButton(
+          onPressed: () {
+            // Giriş Yap Tıklanabilir Yazısı ile ilgili işlemleri ekleyin
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.white,
+            elevation: 0,
+          ),
+          child: Text(
+            'Giriş Yap',
+            style: TextStyle(
+              color: Colors.blue[800],
+              fontSize: 16,
             ),
           ),
-        ],
-      ),
+        ),
+      ]),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
