@@ -1,53 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:sigortamcepte/constants/color_const.dart';
+import 'package:sigortamcepte/pages/file_details_page.dart';
 
-class OfferCard extends StatelessWidget {
+class OfferCard extends StatefulWidget {
   const OfferCard({
     super.key,
   });
 
   @override
+  State<OfferCard> createState() => _OfferCardState();
+}
+
+class _OfferCardState extends State<OfferCard> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 2.3,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 5,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-              elevation: 10,
-              child: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    OfferCardTitle(),
-                    Row(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return FileDetailsPage();
+        }));
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height / 2.3,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 5,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {},
+              child: Card(
+                  elevation: 10,
+                  child: Container(
+                    color: Colors.white,
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 3,
-                          child: Text(
-                            "ÇİLİNGİR VE ASİSTAN HAKKINIZ BULUNMAKTA!",
-                            maxLines: 3,
-                          ),
+                        SizedBox(
+                          height: 20,
                         ),
-                        Image.asset(
-                          "assets/crushedcar.jpeg",
-                          fit: BoxFit.fill,
-                          width: 100,
-                          height: 200,
-                        )
+                        OfferCardTitle(),
+                        Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: Text(
+                                "ÇİLİNGİR VE ASİSTAN HAKKINIZ BULUNMAKTA!",
+                                maxLines: 3,
+                              ),
+                            ),
+                            Image.asset(
+                              "assets/crushedcar.jpeg",
+                              fit: BoxFit.fill,
+                              width: 100,
+                              height: 200,
+                            )
+                          ],
+                        ),
+                        CustomChipWidget(),
                       ],
                     ),
-                    CustomChipWidget(),
-                  ],
-                ),
-              ));
-        },
+                  )),
+            );
+          },
+        ),
       ),
     );
   }

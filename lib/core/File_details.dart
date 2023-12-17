@@ -1,59 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:sigortamcepte/models/dosya_detaylari_servisi_model.dart';
 
-Card DosyaBilgileri(BuildContext context) {
-  return Card(
-      child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-    child: Column(
+class FileDetails extends StatefulWidget {
+  ClaimDetails? claimDetails;
+  FileDetails({
+    Key? key,
+    required this.claimDetails,
+  }) : super(key: key);
+
+  @override
+  State<FileDetails> createState() => _FileDetailsState();
+}
+
+class _FileDetailsState extends State<FileDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 6,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+
+            //Details
+            child: InfoCardDetails(context),
+          ),
+          //Stripe
+          BlueBottomStripe()
+        ],
+      ),
+    );
+  }
+
+  Container BlueBottomStripe() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
+      height: 10,
+    );
+  }
+
+  Column InfoCardDetails(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Eksper/Servis Bilgileri",
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.red, // Çerçeve rengi
-                    width: 2.0, // Çerçeve kalınlığı
-                  ),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Text(
-                "Kapatıldı",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
+        Text(
+          "Eksper :",
+          style: Theme.of(context).textTheme.headline6,
         ),
-        Container(
-            width: double.infinity,
-            child: Text(
-              "Dosya No: 515315135",
-              style: TextStyle(
-                  color: Colors.blue[600], fontWeight: FontWeight.w600),
-            )),
-        Row(
-          children: [
-            Container(
-              height: 20,
-              width: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.asset(
-                    'assets/fullstar.jpeg',
-                    height: 20,
-                  );
-                },
-              ),
-            ),
-          ],
+        Text(
+            'Servis Telefon:${widget.claimDetails!.claimDetails!.claimNumber} '),
+        Text('Servis E-Posta: ${widget.claimDetails!.claimDetails!.aslob}'),
+        Text('Servis Adres: ${widget.claimDetails!.claimDetails!.aslob}'),
+        const SizedBox(height: 8),
+        Text(
+          "Anlaşmalı Servis :",
+          style: Theme.of(context).textTheme.headline6,
         ),
+        Text('Servis Telefon: ${widget.claimDetails!.claimDetails!.aslob}'),
+        Text('Servis E-Posta: ${widget.claimDetails!.claimDetails!.aslob}'),
+        Text('Servis Adres: '),
       ],
-    ),
-  ));
+    );
+  }
 }

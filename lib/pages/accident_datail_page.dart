@@ -5,6 +5,7 @@ import 'package:sigortamcepte/constants/textstyle_consts.dart';
 import 'package:sigortamcepte/pages/after_save_file_page.dart';
 import 'package:sigortamcepte/pages/location_map_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
+import 'package:sigortamcepte/product/custom_text_field.dart';
 
 class AccidentDetailPage extends StatefulWidget {
   @override
@@ -48,44 +49,42 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  customTextField(
-                    controller: isimController,
-                    prefix: Text("Sigorta Şirketinin adı:"),
-                    enable: false,
-                  ),
-                  customTextField(
+                  ExpandedCustomTextField(
+                      controller: isimController,
+                      prefix: Text("Sigorta Şirketinin adı:")),
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Poliçe Numarası:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Adı Soyadı:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("TC:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Poliçe Numarası:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Kazanın olduğu şehir:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Kaza yapan:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Kazanın olduğu İlçe:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Sigorta Şirketinin adı:"),
                   ),
-                  customTextField(
+                  ExpandedCustomTextField(
                     controller: isimController,
                     prefix: Text("Kaza yapan kişinin yakınlığı:"),
                   ),
@@ -98,13 +97,13 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
             ),
             Row(
               children: [
-                customTextField(
+                ExpandedCustomTextField(
                     padding: EdgeInsets.only(right: 4),
                     controller: plaka1Controller),
-                customTextField(
+                ExpandedCustomTextField(
                     padding: EdgeInsets.symmetric(horizontal: 4),
                     controller: plaka2Controller),
-                customTextField(
+                ExpandedCustomTextField(
                     padding: EdgeInsets.only(left: 4),
                     controller: plaka3Controller),
               ],
@@ -159,7 +158,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
             SizedBox(height: 16.0),
             customTextField(
               controller: aciklamaController,
-              prefix: Text("Hasar Açıklaması:"),
+              labelText: "Hasar Açıklaması:",
               maxLines: 5,
             ),
             SizedBox(height: 16.0),
@@ -227,50 +226,28 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
   }
 }
 
-class customTextField extends StatelessWidget {
-  bool border;
-  EdgeInsetsGeometry? padding;
-  String? hintText;
-  int maxLines;
-  Widget? prefix;
-  bool? enable;
-  final TextEditingController controller;
-  customTextField({
+class ExpandedCustomTextField extends StatelessWidget {
+  ExpandedCustomTextField({
     super.key,
     required this.controller,
-    this.hintText,
-    this.maxLines = 1,
-    this.border = true,
     this.padding,
     this.prefix,
     this.enable,
   });
 
+  EdgeInsetsGeometry? padding;
+  Widget? prefix;
+  bool? enable;
+  final TextEditingController controller;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: padding ?? EdgeInsets.symmetric(vertical: 1.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            border: border == true ? Border.all(color: Colors.blue) : null,
-          ),
-          child: TextField(
-            enabled: enable,
-            controller: controller,
-            maxLines: maxLines,
-            decoration: InputDecoration(
-              prefixIcon: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                child: prefix,
-              ),
-              labelText: hintText,
-              border: InputBorder.none,
-            ),
-          ),
-        ),
+      child: customTextField(
+        controller: controller,
+        padding: padding,
+        prefix: prefix,
+        enable: enable,
       ),
     );
   }

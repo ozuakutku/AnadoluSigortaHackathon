@@ -7,7 +7,9 @@ class DetaySayfasi extends StatelessWidget {
   final ServisBilgi servisBilgi;
   final VoidCallback onBack;
 
-  const DetaySayfasi({Key? key, required this.servisBilgi, required this.onBack}) : super(key: key);
+  const DetaySayfasi(
+      {Key? key, required this.servisBilgi, required this.onBack})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class DetaySayfasi extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Servis Noktası: ${servisBilgi.markerId}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text('Servis Noktası: ${servisBilgi.markerId}',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             Text('İletişim: ${servisBilgi.contactInfo}'),
             SizedBox(height: 8),
@@ -48,16 +51,16 @@ class DetaySayfasi extends StatelessWidget {
 
     return Row(
       children: List.generate(
-        filledStars,
+            filledStars,
             (index) => Icon(Icons.star, color: Colors.yellow, size: 20),
-      ) +
+          ) +
           List.generate(
             halfStars,
-                (index) => Icon(Icons.star_half, color: Colors.yellow, size: 20),
+            (index) => Icon(Icons.star_half, color: Colors.yellow, size: 20),
           ) +
           List.generate(
             emptyStars,
-                (index) => Icon(Icons.star_border, color: Colors.grey, size: 20),
+            (index) => Icon(Icons.star_border, color: Colors.grey, size: 20),
           ),
     );
   }

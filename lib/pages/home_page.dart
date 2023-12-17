@@ -25,41 +25,51 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       ]),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // POLICY CARD
-                PolicyCardListview(),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "SANA OZEL",
-                        style: kBlackBoldTextStyle,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return AccidentDetailPage();
-                            }));
-                          },
-                          child: Text("Kaza Yaptım")),
-                    ],
+      body: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: ListView(
+          children: [
+            // POLICY CARD
+            PolicyCardListview(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "SANA OZEL",
+                    style: kBlackBoldTextStyle,
                   ),
-                ),
-                OfferCard(),
-              ],
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return AccidentDetailPage();
+                        }));
+                      },
+                      child: Text("Kaza Yaptım")),
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemCount:
+                    4, // +1, ekranın başka bir bölgesinde yer alan veri için
+                separatorBuilder: (context, index) =>
+                    Divider(), // Ayırıcı (divider) eklemek için
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text("DosyaNo:"),
+                    trailing: Text("Kapatıldı"),
+                  );
+                },
+              ),
+            ),
+            OfferCard(),
+          ],
+        ),
       ),
     );
   }

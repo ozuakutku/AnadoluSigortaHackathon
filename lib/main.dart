@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sigortamcepte/pages/file_details_page.dart';
 import 'package:sigortamcepte/pages/home_page.dart';
 import 'package:sigortamcepte/pages//harita.dart';
+import 'package:sigortamcepte/pages/login_page.dart';
 import 'package:sigortamcepte/pages/main_page.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: LoginPage(),
     );
   }
 }

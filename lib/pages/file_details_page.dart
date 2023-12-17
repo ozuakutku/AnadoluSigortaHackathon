@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:sigortamcepte/core/File_details.dart';
-import 'package:sigortamcepte/core/info_card.dart';
+import 'package:sigortamcepte/core/File_summary.dart';
+import 'package:sigortamcepte/models/dosya_detaylari_servisi_model.dart';
+import 'package:sigortamcepte/service/api_service.dart';
 
-class FileDetailsPage extends StatelessWidget {
+class FileDetailsPage extends StatefulWidget {
   const FileDetailsPage({Key? key}) : super(key: key);
+
+  @override
+  State<FileDetailsPage> createState() => _FileDetailsPageState();
+}
+
+class _FileDetailsPageState extends State<FileDetailsPage> {
+  apiService claimDetailsService = apiService();
+  ClaimDetails? claimDetails;
+
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    claimDetailsService.fetchFileDetails().then((value) {
+      setState(() {
+        claimDetails = value;
+        isLoading = false;
+        print(("${claimDetails!.claimDetails!.claimNumber}"));
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,25 +34,25 @@ class FileDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kaza Yaptım Hasar Dosyası'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CrashCarImage(),
-            const SizedBox(height: 16),
-            DosyaBilgileri(context),
-            InfoCard(
-              title: 'Servis Bilgileri',
-              fileStatus: 'Aktif', // Dosya durumu burada belirtilebilir.
-              fileNo: '123456',
-              phoneNumber: '+90 123 456 7890',
-              email: 'info@sigortamcep.com',
-              address: 'Sigorta Caddesi, No: 123, İstanbul',
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CrashCarImage(),
+                  const SizedBox(height: 16),
+                  FileSummary(
+                    context,
+                    claimDetails,
+                  ),
+                  FileDetails(
+                    claimDetails: claimDetails,
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 
