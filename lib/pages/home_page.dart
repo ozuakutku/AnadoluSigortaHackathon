@@ -50,34 +50,19 @@ class _HomePageState extends State<HomePage> {
                           return AccidentDetailPage();
                         }));
                       },
+                      child: Image.asset("")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return AccidentDetailPage();
+                        }));
+                      },
                       child: Text("Kaza Yaptım")),
                 ],
               ),
             ),
-            Container(
-              child: ListView.separated(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount:
-                    4, // +1, ekranın başka bir bölgesinde yer alan veri için
-                separatorBuilder: (context, index) =>
-                    Divider(), // Ayırıcı (divider) eklemek için
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FileDetailsPage();
-                      }));
-                    },
-                    child: ListTile(
-                      title: Text("DosyaNo:"),
-                      trailing: Text("Kapatıldı"),
-                    ),
-                  );
-                },
-              ),
-            ),
+
             OfferCard(),
           ],
         ),
@@ -105,3 +90,28 @@ class PolicyCardListview extends StatelessWidget {
     );
   }
 }
+
+// Container(
+//               child: ListView.separated(
+//                 shrinkWrap: true,
+//                 physics: ScrollPhysics(),
+//                 itemCount:
+//                     4, // +1, ekranın başka bir bölgesinde yer alan veri için
+//                 separatorBuilder: (context, index) =>
+//                     Divider(), // Ayırıcı (divider) eklemek için
+//                 itemBuilder: (context, index) {
+//                   return GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(context,
+//                           MaterialPageRoute(builder: (context) {
+//                         return FileDetailsPage();
+//                       }));
+//                     },
+//                     child: ListTile(
+//                       title: Text("DosyaNo:"),
+//                       trailing: Text("Kapatıldı"),
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
