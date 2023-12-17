@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class customTextField extends StatelessWidget {
-  bool border;
-  EdgeInsetsGeometry? padding;
-  String? hintText;
-  String? labelText;
-  int maxLines;
-  Widget? prefix;
-  Color borderColor;
-  bool? enable;
+  final bool border;
+  final EdgeInsetsGeometry? padding;
+  final String? hintText;
+  final String? labelText;
+  final int maxLines;
+  final Widget? prefix;
+  final Color borderColor;
+  final TextInputType? keyboardType;
+  final bool? enable;
   final TextEditingController controller;
-  customTextField({
+  const customTextField({
     super.key,
     required this.controller,
     this.hintText,
@@ -20,13 +21,14 @@ class customTextField extends StatelessWidget {
     this.padding,
     this.prefix,
     this.enable,
+    this.keyboardType,
     this.borderColor = Colors.blue,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ?? EdgeInsets.symmetric(vertical: 1.0),
+      padding: EdgeInsets.symmetric(vertical: 2.5),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
@@ -37,6 +39,7 @@ class customTextField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: TextField(
+            keyboardType: keyboardType,
             enabled: enable,
             controller: controller,
             maxLines: maxLines,
@@ -44,7 +47,7 @@ class customTextField extends StatelessWidget {
               prefixIcon: prefix != null
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 4.0),
+                          vertical: 10.0, horizontal: 4.0),
                       child: prefix,
                     )
                   : null,

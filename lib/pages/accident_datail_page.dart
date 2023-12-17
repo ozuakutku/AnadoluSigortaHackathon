@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
+import 'package:sigortamcepte/core/accident_details_page_compenents/expanded_custom_text_field.dart';
+import 'package:sigortamcepte/core/accident_details_page_compenents/info_fields.dart';
 import 'package:sigortamcepte/pages/after_save_file_page.dart';
 import 'package:sigortamcepte/pages/location_map_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
@@ -13,19 +14,34 @@ class AccidentDetailPage extends StatefulWidget {
 }
 
 class _AccidentDetailPageState extends State<AccidentDetailPage> {
-  TextEditingController aciklamaController = TextEditingController();
+  TextEditingController sirketNameController = TextEditingController();
+  TextEditingController policyController = TextEditingController();
   TextEditingController isimController = TextEditingController();
-  TextEditingController soyisimController = TextEditingController();
+  TextEditingController tcController = TextEditingController();
+  TextEditingController hasarTuruController = TextEditingController();
+  TextEditingController sehirController = TextEditingController();
+  TextEditingController ilceController = TextEditingController();
+  TextEditingController kazaYapanController = TextEditingController();
+  TextEditingController yakinlikController = TextEditingController();
   TextEditingController plaka1Controller = TextEditingController();
   TextEditingController plaka2Controller = TextEditingController();
   TextEditingController plaka3Controller = TextEditingController();
+
+  TextEditingController aciklamaController = TextEditingController();
   String? selectedLocation;
-  bool mevcutKonumuKullan = true;
+  bool mevcutKonumuKullan = false;
 
   ImagePicker _imagePicker = ImagePicker();
   XFile? _image;
   // Varsayılan olarak mevcut konumu kullan
   String mevcutKonum = "Mevcut Konum";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sirketNameController.text = "Anadolu Sigorta";
+    policyController.text = "5272754245";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +49,20 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
       appBar: CustomAppBar(
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                isimController.text = "Kadir Yalçın";
+                tcController.text = "11111111111";
+                sehirController.text = "Ankara";
+                ilceController.text = "Çankaya";
+                kazaYapanController.text = "Kadir Yalçın";
+                yakinlikController.text = "Kendisi";
+                plaka1Controller.text = "06";
+                plaka2Controller.text = "TC";
+                plaka3Controller.text = "1453";
+                setState(() {
+                  mevcutKonumuKullan = true;
+                });
+              },
               child: Text(
                 "Otomatik Doldur",
                 style: kBlackBoldTextStyle,
@@ -44,53 +73,16 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ExpandedCustomTextField(
-                      controller: isimController,
-                      prefix: Text("Sigorta Şirketinin adı:")),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Poliçe Numarası:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Adı Soyadı:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("TC:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Poliçe Numarası:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Kazanın olduğu şehir:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Kaza yapan:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Kazanın olduğu İlçe:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Sigorta Şirketinin adı:"),
-                  ),
-                  ExpandedCustomTextField(
-                    controller: isimController,
-                    prefix: Text("Kaza yapan kişinin yakınlığı:"),
-                  ),
-                ],
-              ),
-            ),
+            InfoFields(
+                sirketNameController: sirketNameController,
+                policyController: policyController,
+                isimController: isimController,
+                tcController: tcController,
+                sehirController: sehirController,
+                ilceController: ilceController,
+                kazaYapanController: kazaYapanController,
+                yakinlikController: yakinlikController,
+                hasarTuruController: hasarTuruController),
             Text(
               "Plaka",
               style: kBlackBoldTextStyle.copyWith(fontSize: 16),
@@ -98,17 +90,19 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
             Row(
               children: [
                 ExpandedCustomTextField(
-                    padding: EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: 4),
+                    keyboardType: TextInputType.number,
                     controller: plaka1Controller),
                 ExpandedCustomTextField(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     controller: plaka2Controller),
                 ExpandedCustomTextField(
-                    padding: EdgeInsets.only(left: 4),
+                    padding: const EdgeInsets.only(left: 4),
+                    keyboardType: TextInputType.number,
                     controller: plaka3Controller),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -142,9 +136,9 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                               mevcutKonumuKullan = !mevcutKonumuKullan;
                             });
                           }),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
-                        child: Text(
+                        child: const Text(
                           "Mevcut Konumu  Kullan",
                           textAlign: TextAlign.center,
                           maxLines: 2,
@@ -172,12 +166,17 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AfterSaveFilePage(
-                            PlakaNo: "16 BCS 380",
-                            ad: "Kadir",
-                            soyad: "Yalcin",
-                            dosyaTarihi: "16.12.2012",
-                            dosyaNo: "31351523",
-                            hasarTuru: "Çarpma",
+                            ilce: ilceController.text,
+                            isim: isimController.text,
+                            kazaYapanIsim: kazaYapanController.text,
+                            kazaYapanYakinlik: yakinlikController.text,
+                            plaka:
+                                "${plaka1Controller.text} ${plaka2Controller.text} ${plaka3Controller.text}",
+                            policeNo: policyController.text,
+                            sehir: sehirController.text,
+                            sigtortaSirketiAdi: sirketNameController.text,
+                            tc: tcController.text,
+                            hasarTuru: hasarTuruController.text,
                             konum: selectedLocation ?? 'Mevcut Konum',
                             aciklama: aciklamaController.text,
                           ),
@@ -190,7 +189,6 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                 IconButton(
                     onPressed: () {
                       _pickImage();
-                      print("Foto çek");
                     },
                     icon: Icon(Icons.camera_alt_outlined)),
               ],
@@ -220,35 +218,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
     if (pickedFile != null) {
       setState(() {
         _image = pickedFile;
-        print("foto çekildi");
       });
     }
-  }
-}
-
-class ExpandedCustomTextField extends StatelessWidget {
-  ExpandedCustomTextField({
-    super.key,
-    required this.controller,
-    this.padding,
-    this.prefix,
-    this.enable,
-  });
-
-  EdgeInsetsGeometry? padding;
-  Widget? prefix;
-  bool? enable;
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: customTextField(
-        controller: controller,
-        padding: padding,
-        prefix: prefix,
-        enable: enable,
-      ),
-    );
   }
 }

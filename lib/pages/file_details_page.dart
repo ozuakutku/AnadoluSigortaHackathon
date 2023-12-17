@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sigortamcepte/core/File_details.dart';
 import 'package:sigortamcepte/core/File_summary.dart';
 import 'package:sigortamcepte/models/dosya_detaylari_servisi_model.dart';
 import 'package:sigortamcepte/service/api_service.dart';
+import 'package:sigortamcepte/service/datas.dart';
 
 class FileDetailsPage extends StatefulWidget {
   const FileDetailsPage({Key? key}) : super(key: key);
@@ -12,31 +14,15 @@ class FileDetailsPage extends StatefulWidget {
 }
 
 class _FileDetailsPageState extends State<FileDetailsPage> {
-  apiService claimDetailsService = apiService();
-  ClaimDetails? claimDetails;
-
-  bool isLoading = true;
-  @override
-  void initState() {
-    super.initState();
-    claimDetailsService.fetchFileDetails().then((value) {
-      setState(() {
-        claimDetails = value;
-        isLoading = false;
-        print(("${claimDetails!.claimDetails!.claimNumber}"));
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kaza Yaptım Hasar Dosyası'),
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
+        appBar: AppBar(
+          title: const Text('Kaza Yaptım Hasar Dosyası'),
+        ),
+        body: Consumer<Datas>(
+          builder: (ccontext, provider, child) {
+            return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,15 +31,16 @@ class _FileDetailsPageState extends State<FileDetailsPage> {
                   const SizedBox(height: 16),
                   FileSummary(
                     context,
-                    claimDetails,
+                    provider.claimDetails,
                   ),
                   FileDetails(
-                    claimDetails: claimDetails,
+                    claimDetails: provider.claimDetails,
                   ),
                 ],
               ),
-            ),
-    );
+            );
+          },
+        ));
   }
 
   Image CrashCarImage() {

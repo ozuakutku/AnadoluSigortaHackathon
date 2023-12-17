@@ -5,39 +5,20 @@ import 'veritabani.dart';
 import 'servisbilgi.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({Key? key}) : super(key: key);
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  _MapPageState createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  LatLng _center = const LatLng(45.521563, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const Harita(),
-    );
-  }
-}
-
-class Harita extends StatefulWidget {
-  const Harita({Key? key}) : super(key: key);
-
-  @override
-  _HaritaState createState() => _HaritaState();
-}
-
-class _HaritaState extends State<Harita> {
-  late GoogleMapController mapController;
-  LatLng _center = const LatLng(0, 0);
 
   Set<Marker> _markers = {};
   Marker? _selectedMarker;
@@ -45,11 +26,6 @@ class _HaritaState extends State<Harita> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
     _getCurrentLocation();
   }
 

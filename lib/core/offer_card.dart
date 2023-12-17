@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sigortamcepte/constants/color_const.dart';
-import 'package:sigortamcepte/pages/file_details_page.dart';
 
 class OfferCard extends StatefulWidget {
   const OfferCard({
@@ -15,11 +14,7 @@ class _OfferCardState extends State<OfferCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return FileDetailsPage();
-        }));
-      },
+      onTap: () {},
       child: Container(
         height: MediaQuery.of(context).size.height / 2.3,
         child: ListView.builder(

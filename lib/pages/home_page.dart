@@ -3,7 +3,9 @@ import 'package:sigortamcepte/constants/textstyle_consts.dart';
 import 'package:sigortamcepte/core/offer_card.dart';
 import 'package:sigortamcepte/core/policy_card.dart';
 import 'package:sigortamcepte/pages/accident_datail_page.dart';
+import 'package:sigortamcepte/pages/file_details_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
+import 'package:sigortamcepte/product/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       ]),
+      drawer: CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(14.0),
         child: ListView(
@@ -60,9 +63,17 @@ class _HomePageState extends State<HomePage> {
                 separatorBuilder: (context, index) =>
                     Divider(), // Ayırıcı (divider) eklemek için
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text("DosyaNo:"),
-                    trailing: Text("Kapatıldı"),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return FileDetailsPage();
+                      }));
+                    },
+                    child: ListTile(
+                      title: Text("DosyaNo:"),
+                      trailing: Text("Kapatıldı"),
+                    ),
                   );
                 },
               ),
