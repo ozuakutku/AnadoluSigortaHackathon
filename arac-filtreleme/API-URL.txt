@@ -1,0 +1,3 @@
+Ekibimiz, Anadolu Sigorta'daki araç sigortalama işlemleri hakkında bir yenilik geliştirmeyi amaçladığı için ülkemizdeki bir otomativ firmasını seçtik.
+Borusan Otomativ kapsamındaki 250'ye yakın araç için teknik özellikleri içeren bir verisetini data-mining yaparak ve teknik broşürleri inceleyerek oluşturduk.
+İlgili api: https://obscure-caverns-83717-2590e7fd456f.herokuapp.com/filtrele
