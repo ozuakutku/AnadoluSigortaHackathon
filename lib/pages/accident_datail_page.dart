@@ -29,6 +29,10 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
   TextEditingController plaka3Controller = TextEditingController();
 
   TextEditingController aciklamaController = TextEditingController();
+  TextEditingController soyisimController = TextEditingController();
+  TextEditingController adresController = TextEditingController();
+  TextEditingController plakaController = TextEditingController();
+
   String? selectedLocation;
   bool mevcutKonumuKullan = false;
 
@@ -202,7 +206,24 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
     );
   }
 
-  Future<String?> _selectLocation(BuildContext context) async {
+  ElevatedButton getLocationButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        // Harita sayfasını aç ve konumu seç
+        String? location = await _selectLocation(context);
+        if (location != null) {
+          setState(() {
+            selectedLocation = location;
+          });
+        }
+      },
+      child: Text('Konum Seç'),
+    );
+  }
+
+  Future<String?> _selectLocation(
+    BuildContext context,
+  ) async {
     // Harita sayfasını aç ve konumu seç
     final String? selectedLocation = await Navigator.push(
       context,
