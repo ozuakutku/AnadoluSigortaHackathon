@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "242003191694",
+    "project_id": "anadolu-sigorta-bb9d7",
+    "storage_bucket": "anadolu-sigorta-bb9d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242003191694:android:2e4b6c605145d3755ba6df",
+        "android_client_info": {
+          "package_name": "com.example.sigortamcepte"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL1dHiZ-dswZTcPIf76317rYiXUY5FXQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

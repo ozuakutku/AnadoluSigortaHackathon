@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sigortamcepte/core/login_page_compenents/bottom_line.dart';
 import 'package:sigortamcepte/core/login_page_compenents/login_button.dart';
 import 'package:sigortamcepte/core/login_page_compenents/login_with_other_option.dart';
 import 'package:sigortamcepte/product/custom_text_field.dart';
-import 'package:sigortamcepte/service/datas.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,7 +17,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Datas datas = Provider.of<Datas>(context);
     var _size = MediaQuery.of(context).size;
     var loginDetailsText = const Text(
       "Login Details",

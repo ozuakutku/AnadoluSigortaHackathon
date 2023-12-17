@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class customTextField extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final bool border;
   final EdgeInsetsGeometry? padding;
   final String? hintText;
@@ -11,7 +11,7 @@ class customTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? enable;
   final TextEditingController controller;
-  const customTextField({
+  const CustomTextField({
     super.key,
     required this.controller,
     this.hintText,
@@ -28,7 +28,7 @@ class customTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.5),
+      padding: const EdgeInsets.symmetric(vertical: 2.5),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),

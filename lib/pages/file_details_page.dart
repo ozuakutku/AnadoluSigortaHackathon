@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sigortamcepte/core/File_details.dart';
 import 'package:sigortamcepte/core/File_summary.dart';
-import 'package:sigortamcepte/models/dosya_detaylari_servisi_model.dart';
-import 'package:sigortamcepte/service/api_service.dart';
 import 'package:sigortamcepte/service/datas.dart';
 
 class FileDetailsPage extends StatefulWidget {
-  const FileDetailsPage({Key? key}) : super(key: key);
-
+  FileDetailsPage({Key? key, this.index}) : super(key: key);
+  var index;
   @override
   State<FileDetailsPage> createState() => _FileDetailsPageState();
 }
@@ -31,10 +29,10 @@ class _FileDetailsPageState extends State<FileDetailsPage> {
                   const SizedBox(height: 16),
                   FileSummary(
                     context,
-                    provider.claimDetails,
+                    provider.claimDetails[0],
                   ),
                   FileDetails(
-                    claimDetails: provider.claimDetails,
+                    claimDetails: provider.claimDetails[0],
                   ),
                 ],
               ),

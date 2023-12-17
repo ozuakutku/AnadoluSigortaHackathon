@@ -6,6 +6,7 @@ import 'package:sigortamcepte/core/accident_details_page_compenents/info_fields.
 import 'package:sigortamcepte/pages/after_save_file_page.dart';
 import 'package:sigortamcepte/pages/location_map_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
+import 'package:sigortamcepte/product/custom_drawer.dart';
 import 'package:sigortamcepte/product/custom_text_field.dart';
 
 class AccidentDetailPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
   bool mevcutKonumuKullan = false;
 
   ImagePicker _imagePicker = ImagePicker();
+  // ignore: unused_field
   XFile? _image;
   // Varsayılan olarak mevcut konumu kullan
   String mevcutKonum = "Mevcut Konum";
@@ -69,6 +71,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
               ))
         ],
       ),
+      drawer: CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -150,7 +153,7 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
               ],
             ),
             SizedBox(height: 16.0),
-            customTextField(
+            CustomTextField(
               controller: aciklamaController,
               labelText: "Hasar Açıklaması:",
               maxLines: 5,

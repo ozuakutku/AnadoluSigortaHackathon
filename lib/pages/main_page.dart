@@ -20,7 +20,6 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     late Datas datas = Provider.of<Datas>(context);
 
-    datas.getDatas();
     return datas.isLoading
         ? Scaffold(
             body: Center(

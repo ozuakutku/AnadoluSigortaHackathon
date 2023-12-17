@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sigortamcepte/models/dosya_detaylari_servisi_model.dart';
 
 class FileDetails extends StatefulWidget {
-  ClaimDetails? claimDetails;
+  final ClaimDetails? claimDetails;
   FileDetails({
     Key? key,
     required this.claimDetails,

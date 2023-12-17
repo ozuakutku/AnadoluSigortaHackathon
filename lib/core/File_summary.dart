@@ -36,7 +36,7 @@ Card FileSummary(BuildContext context, ClaimDetails? claimDetails) {
         Container(
             width: double.infinity,
             child: Text(
-              "Dosya No: ${claimDetails!.claimDetails!.claimNumber}",
+              "Dosya No: ${claimDetails.claimDetails!.claimNumber}",
               style: TextStyle(
                   color: Colors.blue[600], fontWeight: FontWeight.w600),
             )),
@@ -45,15 +45,21 @@ Card FileSummary(BuildContext context, ClaimDetails? claimDetails) {
             Container(
               height: 20,
               width: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.asset(
-                    'assets/fullstar.jpeg',
-                    height: 20,
-                  );
-                },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  for (int i = 0; i < 4; i++)
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 20,
+                    ),
+                  Icon(
+                    Icons.star_border,
+                    color: Colors.amber,
+                    size: 20,
+                  ),
+                ],
               ),
             ),
           ],

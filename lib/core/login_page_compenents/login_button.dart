@@ -18,6 +18,9 @@ class LoginButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(5.0),
           )),
       onPressed: () async {
+        late Datas datas = Provider.of<Datas>(context, listen: false);
+
+        datas.getDatas();
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return MainPage();
         }));

@@ -19,7 +19,7 @@ class ExpandedCustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: customTextField(
+      child: CustomTextField(
         keyboardType: keyboardType,
         controller: controller,
         padding: padding,

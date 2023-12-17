@@ -1,24 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sigortamcepte/pages/vote_page.dart';
 import 'veritabani.dart';
 import 'servisbilgi.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+  const MapPage({super.key});
 
   @override
-  _MapPageState createState() => _MapPageState();
+  State<MapPage> createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
 
-  LatLng _center = const LatLng(45.521563, -122.677433);
+  final LatLng _center = const LatLng(45.521563, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: const Harita(),
+    );
+  }
+}
+
+class Harita extends StatefulWidget {
+  const Harita({Key? key}) : super(key: key);
+
+  @override
+  _HaritaState createState() => _HaritaState();
+}
+
+class _HaritaState extends State<Harita> {
+  late GoogleMapController mapController;
+  LatLng _center = const LatLng(0, 0);
 
   Set<Marker> _markers = {};
   Marker? _selectedMarker;
@@ -26,6 +46,11 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+    _getCurrentLocation();
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
     _getCurrentLocation();
   }
 
@@ -107,31 +132,34 @@ class _MapPageState extends State<MapPage> {
       ServisBilgi selectedServisBilgi = Veritabani.servisBilgileri.firstWhere(
           (servis) => servis.markerId == _selectedMarker!.markerId.value);
 
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Servis Noktası: ${_selectedMarker!.markerId.value}'),
-                SizedBox(height: 8),
-                Text('İletişim: ${selectedServisBilgi.contactInfo}'),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text('Puan: '),
-                    SizedBox(width: 8),
-                    // Burada yıldızları ekleyebilirsiniz
-                    _buildStarRating(selectedServisBilgi.rating),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      Navigator.push(context, MaterialPageRoute(builder: (Context) {
+        return VotePage();
+      }));
+      // showModalBottomSheet(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return Container(
+      //       padding: EdgeInsets.all(16),
+      //       child: Column(
+      //         mainAxisSize: MainAxisSize.min,
+      //         children: [
+      //           Text('Servis Noktası: ${_selectedMarker!.markerId.value}'),
+      //           SizedBox(height: 8),
+      //           Text('İletişim: ${selectedServisBilgi.contactInfo}'),
+      //           SizedBox(height: 8),
+      //           Row(
+      //             children: [
+      //               Text('Puan: '),
+      //               SizedBox(width: 8),
+      //               // Burada yıldızları ekleyebilirsiniz
+      //               _buildStarRating(selectedServisBilgi.rating),
+      //             ],
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // );
     }
   }
 
