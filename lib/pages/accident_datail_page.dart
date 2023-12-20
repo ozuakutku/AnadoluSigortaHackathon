@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sigortamcepte/constants/textstyle_consts.dart';
@@ -8,6 +10,7 @@ import 'package:sigortamcepte/pages/location_map_page.dart';
 import 'package:sigortamcepte/product/custom_appbar.dart';
 import 'package:sigortamcepte/product/custom_drawer.dart';
 import 'package:sigortamcepte/product/custom_text_field.dart';
+import 'package:sigortamcepte/service/image_process_api.dart';
 
 class AccidentDetailPage extends StatefulWidget {
   @override
@@ -38,7 +41,9 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
 
   ImagePicker _imagePicker = ImagePicker();
   // ignore: unused_field
+  List<XFile> _images = [];
   XFile? _image;
+  String? _result;
   // Varsayılan olarak mevcut konumu kullan
   String mevcutKonum = "Mevcut Konum";
   @override
@@ -200,6 +205,33 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
                     icon: Icon(Icons.camera_alt_outlined)),
               ],
             ),
+            Container(
+              height: 200,
+              child: _images.isEmpty
+                  ? Center(
+                      child: Text('No images selected $_result'),
+                    )
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _images.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Image.file(
+                          File(_images[index].path),
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  if (_image != null) {
+                    // Gönderilecek olan _pickedImage'ı bir sunucuya gönderme işlemi burada gerçekleştirilebilir
+                    _result = await sendImageToServer(_image!.path);
+
+                    setState(() {});
+                  }
+                },
+                child: Text(" dene"))
           ],
         ),
       ),
@@ -235,14 +267,15 @@ class _AccidentDetailPageState extends State<AccidentDetailPage> {
     return selectedLocation;
   }
 
-  void _pickImage() async {
-    final pickedFile =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
+  Future<void> _pickImage() async {
+    try {
+      final XFile? pickedFile =
+          await _imagePicker.pickImage(source: ImageSource.camera);
       setState(() {
         _image = pickedFile;
       });
+    } catch (e) {
+      print("Error picking image: $e");
     }
   }
 }

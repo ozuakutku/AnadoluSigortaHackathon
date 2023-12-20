@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sigortamcepte/pages/accident_datail_page.dart';
+import 'package:sigortamcepte/pages/home_page.dart';
 import 'package:sigortamcepte/pages/main_page.dart';
 import 'package:sigortamcepte/service/datas.dart';
 
@@ -22,7 +24,7 @@ class LoginButton extends StatelessWidget {
 
         datas.getDatas();
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return MainPage();
+          return HomePage();
         }));
       },
       child: const Center(

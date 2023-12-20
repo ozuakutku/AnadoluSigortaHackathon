@@ -146,6 +146,16 @@ class _AfterSaveFilePageState extends State<AfterSaveFilePage> {
                     onPressed: () {
                       showPopupCekici(context);
                     },
+                    child: Text("Gideceğin Servisi seç.")),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showPopupCekici(context);
+                    },
                     child: Text("Çekici Çağır")),
                 ElevatedButton(
                     onPressed: () {

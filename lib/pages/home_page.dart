@@ -50,14 +50,6 @@ class _HomePageState extends State<HomePage> {
                           return AccidentDetailPage();
                         }));
                       },
-                      child: Image.asset("")),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return AccidentDetailPage();
-                        }));
-                      },
                       child: Text("Kaza Yaptım")),
                 ],
               ),
